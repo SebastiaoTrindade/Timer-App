@@ -1,2 +1,18 @@
-<h1>Timers#digital</h1>
-<p>Find me in app/views/timers/digital.html.erb</p>
+<div class="container text-center mt-5">
+    <h1>Relógio Digital</h1>
+    <div id="digital-clock" class="display-4"></div>    
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date()
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('digital-clock').innerText = `${hours}:${minutes}:${seconds}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
