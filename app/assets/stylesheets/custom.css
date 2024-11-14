@@ -1,0 +1,79 @@
+/*NAVEGAÇÃO*/
+.navbar-custom{
+    background-color: #343a40;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: #fff;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #ffc107;
+}
+
+/*Headers dos cards*/
+.card-header-custom {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+}
+
+.card-header-secondary{
+    background-color: #6c757d;
+    color: #fff;
+    text-align: center;
+}
+
+/*Body dos cards*/
+.card-body-custom{
+    background-size: cover;
+    background-position: center;    
+    position: relative;
+}
+
+.card-body-clock{
+    background-image: url('<%= asset_path("relogio.jpg") %>');
+}
+
+.card-body-timer{
+    background-image: url('<%= asset_path("cronometro.jpg") %>');
+}
+
+.overlay{
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 0.25rem;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.overlay:hover{
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.overlay h3{
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.overlay p{
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+/*Botão*/
+.btn-group .btn{
+    margin: 15px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+}
