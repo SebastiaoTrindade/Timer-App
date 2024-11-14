@@ -6,5 +6,30 @@
     <button id="reset" class="btn btn-secondary">Reiniciar</button>
 </div>
 
+<script>
+  let stopwatchInterval, elapsed = 0;
 
-<p>Find me in app/views/timers/clock.html.erb</p>
+  function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  function startStopwatch() {
+    const startTime = Date.now() - elapsed;
+    stopwatchInterval = setInterval(() => {
+      elapsed = Date.now() - startTime;
+      document.getElementById('stopwatch').innerText = formatTime(elapsed);
+    }, 1000);
+  }
+
+  document.getElementById('start').addEventListener('click', startStopwatch);
+  document.getElementById('stop').addEventListener('click', () => clearInterval(stopwatchInterval));
+  document.getElementById('reset').addEventListener('click', () => {
+    clearInterval(stopwatchInterval);
+    elapsed = 0;
+    document.getElementById('stopwatch').innerText = '00:00:00';
+  });
+</script>
