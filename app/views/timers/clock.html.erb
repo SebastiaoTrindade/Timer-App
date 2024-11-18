@@ -6,7 +6,7 @@
             </div>
             <div class="card-body card-body-custom card-body-timer">
                 <div class="overlay">
-                    <h3 id="stopwatch" class="display-4">00:00:00</h3>
+                    <h3 id="stopwatch" class="display-4">00:00:00:00</h3>
                     <p class="lead">Acompanhe seu tempo com precisão!</p>
                     <div class="btn-group mt-3" role="group">
                         <button id="start" class="btn btn-primary">Iniciar</button>
@@ -21,30 +21,49 @@
   
 
 
-<script>
-  let stopwatchInterval, elapsed = 0;
+<<script>
+  let timerInterval;
+  let timeElapsed = 0; // Milissegundos acumulados
+  const timerDisplay = document.getElementById("stopwatch");
 
-  function formatTime(ms) {
-    const totalSeconds = Math.floor(ms / 1000);
-    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
-    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
-    const seconds = String(totalSeconds % 60).padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
+  // Atualiza o cronômetro no formato HH:MM:SS.CC
+  function updateTimerDisplay() {
+      const hours = String(Math.floor(timeElapsed / 3600000)).padStart(2, '0');
+      const minutes = String(Math.floor((timeElapsed % 3600000) / 60000)).padStart(2, '0');
+      const seconds = String(Math.floor((timeElapsed % 60000) / 1000)).padStart(2, '0');
+      const centiseconds = String(Math.floor((timeElapsed % 1000) / 10)).padStart(2, '0');
+      timerDisplay.textContent = `${hours}:${minutes}:${seconds}.${centiseconds}`;
   }
 
-  function startStopwatch() {
-    const startTime = Date.now() - elapsed;
-    stopwatchInterval = setInterval(() => {
-      elapsed = Date.now() - startTime;
-      document.getElementById('stopwatch').innerText = formatTime(elapsed);
-    }, 1000);
+  // Função para iniciar o cronômetro
+  function startTimer() {
+      if (!timerInterval) {
+          const startTime = Date.now() - timeElapsed;
+          timerInterval = setInterval(() => {
+              timeElapsed = Date.now() - startTime;
+              updateTimerDisplay();
+          }, 10); // Atualiza a cada 10ms
+      }
   }
 
-  document.getElementById('start').addEventListener('click', startStopwatch);
-  document.getElementById('stop').addEventListener('click', () => clearInterval(stopwatchInterval));
-  document.getElementById('reset').addEventListener('click', () => {
-    clearInterval(stopwatchInterval);
-    elapsed = 0;
-    document.getElementById('stopwatch').innerText = '00:00:00';
-  });
+  // Função para pausar o cronômetro
+  function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+  }
+
+  // Função para resetar o cronômetro
+  function resetTimer() {
+      pauseTimer();
+      timeElapsed = 0;
+      updateTimerDisplay();
+  }
+
+  // Eventos dos botões
+  document.getElementById("start").addEventListener("click", startTimer);
+  document.getElementById("stop").addEventListener("click", pauseTimer);
+  document.getElementById("reset").addEventListener("click", resetTimer);
+
+  // Inicializa o display do cronômetro
+  updateTimerDisplay();
 </script>
