@@ -15,7 +15,7 @@
 /*Headers dos cards*/
 .card-header-custom {
     background-color: #007bff;
-    color: white;
+    color: #fff;
     text-align: center;
 }
 
@@ -26,24 +26,26 @@
 }
 
 /*Body dos cards*/
-.card-body-custom{
+.card-body-custom {
     background-size: cover;
-    background-position: center;    
+    background-position: center;
+    color: white;
     position: relative;
+    height: 300px;
 }
 
 .card-body-clock{
-    background-image: url('<%= asset_path("relogio.jpg") %>');
+    background-image: image-url('relogio.jpg');     
 }
 
 .card-body-timer{
-    background-image: url('<%= asset_path("cronometro.jpg") %>');
+    background-image: image-url('cronometro.jpg');     
 }
 
 .overlay{
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
     padding: 20px;
     display: flex;
     flex-direction: column;
