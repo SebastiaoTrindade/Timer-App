@@ -79,3 +79,16 @@
     font-size: 1.2rem;
     padding: 10px 20px;
 }
+
+/*Alarme*/
+.card-body-alarm {
+    background-image: image-url('alarme.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+#alarm-message {
+    font-size: 1.2em;
+    text-align: center;
+}
