@@ -9,11 +9,19 @@
                 <form id="alarm-form">
                     <div class="form-group">
                         <label for="alarm-time">Horário (HH:MM)</label>
-                        <input type="time" id="alarm-time" class="form-control" required />
+                        <input
+                            type="time"
+                            id="alarm-time"
+                            class="form-control"
+                            required
+                        />
                     </div>
-                    <button type="submit" class="btn btn-primary mt-2">Ativar Alarme</button>
-                    <button id="cancel-alarm" class="btn btn-danger mt-2">Cancelar Alarme</button>
-                    
+                    <button type="submit" class="btn btn-primary mt-2">
+                        Ativar Alarme
+                    </button>
+                    <button id="cancel-alarm" type="button" class="btn btn-danger mt-2">
+                        Cancelar Alarme
+                    </button>
                 </form>
                 <div id="alarm-message" class="alert alert-info mt-3 d-none">
                     <strong>Alarme definido!</strong> Você será notificado quando o horário for alcançado.
@@ -23,55 +31,60 @@
     </div>
 </div>
 
+
 <script>
-    let alarmTime = null; // Horário do alarme
-    let alarmTimeout; // Timeout do alarme
+    let alarmTime = null; // Horário definido para o alarme
+let alarmTimeout = null; // Timeout para o alarme
+const alarmSound = new Audio("/assets/alarme.mp3"); // Caminho do som do alarme
 
 // Configura o alarme
 document.getElementById("alarm-form").addEventListener("submit", (e) => {
     e.preventDefault();
     const alarmInput = document.getElementById("alarm-time").value;
     if (alarmInput) {
-        alarmTime = alarmInput; // Exemplo: "14:30"
+        alarmTime = alarmInput; // Define o horário do alarme
         document.getElementById("alarm-message").classList.remove("d-none");
-        document.getElementById("alarm-message").textContent = `Alarme definido para ${alarmTime}.`;
-        checkAlarm(); // Inicia a verificação do alarme
+        document.getElementById("alarm-message").textContent =
+            `⏰ Alarme definido para ${alarmTime}.`;
+        startAlarmCheck(); // Inicia a verificação do alarme
     }
 });
 
 // Cancela o alarme
 document.getElementById("cancel-alarm").addEventListener("click", () => {
-    alarmTime = null;
-    clearTimeout(alarmTimeout);
+    alarmTime = null; // Reseta o horário do alarme
+    clearTimeout(alarmTimeout); // Cancela o timeout
+    alarmSound.pause(); // Para o som do alarme, se estiver tocando
+    alarmSound.currentTime = 0; // Reseta o som do alarme
     document.getElementById("alarm-message").classList.add("d-none");
 });
 
-// Verifica se o horário atual corresponde ao alarme
-function checkAlarm() {
+// Verifica o horário do alarme continuamente
+function startAlarmCheck() {
     if (!alarmTime) return;
 
     const now = new Date();
-    const currentTime = now.toTimeString().slice(0, 5); // HH:MM
-    console.log(`Horário atual: ${currentTime}, Alarme: ${alarmTime}`); // Debug
+    const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(
+        now.getMinutes()
+    ).padStart(2, "0")}`; // Formata o horário atual como HH:MM
 
     if (currentTime === alarmTime) {
-        alert("⏰ O alarme está tocando!");
         playAlarmSound(); // Toca o som do alarme
-        alarmTime = null; // Reseta o alarme
+        alarmTime = null; // Reseta o horário do alarme após tocar
         document.getElementById("alarm-message").classList.add("d-none");
         return;
     }
 
     // Continua verificando a cada 1 segundo
-    alarmTimeout = setTimeout(checkAlarm, 1000);
+    alarmTimeout = setTimeout(startAlarmCheck, 1000);
 }
 
-// Reproduz um som
+// Reproduz o som do alarme
 function playAlarmSound() {
-    const alarmSound = new Audio("/assets/alarme.mp3");
+    alarmSound.loop = true; // O som será repetido em loop
     alarmSound.play().catch((error) => {
-        console.error("Erro ao tocar o som:", error);
-        alert("⏰ O som do alarme não pode ser reproduzido. Verifique as configurações do navegador.");
+        console.error("Erro ao tocar o som do alarme:", error);
     });
 }
+
 </script>
