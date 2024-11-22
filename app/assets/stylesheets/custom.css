@@ -12,6 +12,11 @@
     color: #ffc107;
 }
 
+.navbar-brand {
+    font-weight: bold;
+}  
+  
+
 /*Headers dos cards*/
 .card-header-custom {
     background-color: #007bff;
